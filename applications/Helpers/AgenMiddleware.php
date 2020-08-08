@@ -8,7 +8,7 @@ class AgenMiddleware
 	{
 		if(!session()->get('id') || session()->user()->level != "agen")
 		{
-			redirect(base_url());
+			redirect('/');
 			die();
 		}
 	}

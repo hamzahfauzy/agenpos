@@ -8,7 +8,7 @@ class AdminMiddleware
 	{
 		if(!session()->get('id') || session()->user()->level != "admin")
 		{
-			redirect(base_url());
+			redirect('/');
 			die();
 		}
 	}
