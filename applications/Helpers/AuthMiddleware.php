@@ -8,12 +8,12 @@ class AuthMiddleware
 	{
 		if(!session()->get('id'))
 		{
-			redirect(base_url().'/auth/login');
+			redirect('/auth/login');
 			die();
 		}
 		else
 		{
-			redirect(base_url().'/'.session()->user()->level.'/home');
+			redirect('/'.session()->user()->level.'/home');
 			die();
 		}
 	}
