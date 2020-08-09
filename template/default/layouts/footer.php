@@ -139,8 +139,10 @@
 	        </div>
 	        <div class="box-others">
 	            <div class="box">
-	                <img src="<?=asset('assets/report.png')?>" alt="">
-	                <span>Buka Backsheet</span>
+					<a href="<?=base_url()?>/agen/backsheet/index">
+						<img src="<?=asset('assets/report.png')?>" alt="">
+						<span>Buka Backsheet</span>
+					</a>
 	            </div>
 	            <div class="box">
 	                <img src="<?=asset('assets/report.png')?>" alt="">

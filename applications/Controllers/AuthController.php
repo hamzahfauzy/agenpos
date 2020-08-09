@@ -53,7 +53,8 @@ class AuthController
 		 
 		// pengaturan font captcha
 		$color = imagecolorallocate($gbr, 253, 252, 252);
-		$font = dirname(dirname(dirname(__FILE__)))."\\public\\fonts\\Allura-Regular.otf"; 
+		// $font = dirname(dirname(dirname(__FILE__)))."\\public\\fonts\\Allura-Regular.otf"; 
+		$font = dirname(dirname(dirname(__FILE__)))."/public/fonts/Allura-Regular.otf"; 
 		$ukuran_font = 20;
 		$posisi = 32;
 		// membuat nomor acak dan ditampilkan pada gambar
