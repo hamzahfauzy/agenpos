@@ -155,7 +155,7 @@ class LoketController
 		CURLOPT_CUSTOMREQUEST => "POST",
 		CURLOPT_SSL_VERIFYHOST=> 0,
 		CURLOPT_SSL_VERIFYPEER=>0,
-		CURLOPT_POSTFIELDS => "origin=15&destination=$dest&weight=1800&courier=$courier",
+		CURLOPT_POSTFIELDS => "origin=353&destination=$dest&weight=1000&courier=$courier",
 		CURLOPT_HTTPHEADER => array(
 			"content-type: application/x-www-form-urlencoded",
 			"key: $this->apikey"
