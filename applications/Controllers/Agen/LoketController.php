@@ -28,6 +28,14 @@ class LoketController
 		]);
 	}
 
+	function cetak($id_pengiriman)
+	{
+		$pengiriman = Pengiriman::find($id_pengiriman);
+		return partial('agen.loket.cetak',[
+			'pengiriman' => $pengiriman
+		]);
+	}
+
 	function proses(){
 		$_POST['pengiriman']['total_tarif'] = str_replace(',','',$_POST['pengiriman']['total_tarif']);
 		$pengiriman = (new Pengiriman)->save($_POST['pengiriman']);
@@ -38,7 +46,7 @@ class LoketController
 			$_POST['penerima']['id_pengiriman'] = $pengiriman;
 
 			if( (new Pengirim)->save($_POST['pengirim']) && (new Penerima)->save($_POST['penerima']) ){
-				redirect("/agen/home");
+				redirect("/agen/loket/cetak/$pengiriman");
 				return false;
 			}
 		}

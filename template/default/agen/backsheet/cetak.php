@@ -3,7 +3,6 @@
 	background-color: #FFF;
 	height: auto;
 	position: relative;
-	border:2px solid #3498db;
 	padding:12px;
 	margin-top: 20px;
 }
@@ -19,7 +18,7 @@
 				<h5>BACKSHEET KIRIMAN POS</h5>
 				<h5>TANGGAL : <?= date("d-m-Y") ?></h5>
 			</center>
-			<table class="table table-bordered">
+			<table class="table table-bordered" border="1" cellpadding="5" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 						<th>NO</th>
@@ -82,10 +81,7 @@
 						
 						<tr>
 							<td><?=$i?></td>
-							<td>
-								<?=$pengiriman->no_resi?><br>
-								<a href="<?=base_url()?>/agen/loket/cetak/<?=$pengiriman->id?>" class="no-print"><i class="fa fa-print"></i> Cetak Ulang Resi</a>
-							</td>
+							<td><?=$pengiriman->no_resi?><br></td>
 							<td><?=$pengirim->nama?></td>
 							<td><?=$penerima->nama?></td>
 							<td><?=$pengiriman->tujuan?></td>
@@ -148,7 +144,7 @@
 	</div>
 	<div class="row">
 		<div class="col-12">
-			<table cellpadding="5">
+			<table cellpadding="5" cellspacing="0" style="text-align: left;">
 				<tr>
 					<th>Keterangan</th>
 					<th>:</th>
@@ -187,5 +183,25 @@
 			</table>
 		</div>
 	</div>
+	<br><br>
+	<div style="width: 100%;">
+		<div style="float: left;">
+			<br><br>
+			<p>Dibuat Oleh</p>
+			<p>Petugas Loket</p>
+			<br><br><br>
+			<p> <b> <?=session()->user()->nama?> </b> </p>
+		</div>
+		<div style="float: right;">
+			<p>Tanggal Cetak <?= date("d-m-Y H:i:s") ?></p>
+			<p>Diperiksa Oleh</p>
+			<p>Pengelola Agen</p>
+			<br><br><br>
+			<p> <b> ADMIN </b> </p>
+		</div>
+	</div>
 </div>
 </div>
+<script type="text/javascript">
+	window.print()
+</script>

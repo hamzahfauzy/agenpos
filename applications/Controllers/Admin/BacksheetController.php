@@ -1,20 +1,20 @@
 <?php
-namespace App\Controllers\Agen;
+namespace App\Controllers\Admin;
 if (!defined('Z_MVC')) die ("Not Allowed");
 
-use App\Helpers\AgenMiddleware;
+use App\Helpers\AdminMiddleware;
 use App\Models\Pengiriman;
 
 class BacksheetController
 {
 	function __construct()
 	{
-		new AgenMiddleware;
+		new AdminMiddleware;
 	}
 
 	function index()
 	{
-		$pengirimans = Pengiriman::where('id_agen',$_SESSION['id'])->get();
+		$pengirimans = Pengiriman::get();
 		$layanans = [];
 
 		foreach($pengirimans as $pengiriman){
@@ -22,7 +22,7 @@ class BacksheetController
 				$layanans[] = $pengiriman->jenis_layanan;
 			}
 		}
-		return view("agen.backsheet.index",[
+		return view("admin.backsheet.index",[
 			'pengirimans'=>$pengirimans,
 			'layanans'=>$layanans,
 		]);
@@ -30,7 +30,7 @@ class BacksheetController
 
 	function cetak()
 	{
-		$pengirimans = Pengiriman::where('id_agen',$_SESSION['id'])->get();
+		$pengirimans = Pengiriman::get();
 		$layanans = [];
 
 		foreach($pengirimans as $pengiriman){
@@ -38,7 +38,23 @@ class BacksheetController
 				$layanans[] = $pengiriman->jenis_layanan;
 			}
 		}
-		return partial("agen.backsheet.cetak",[
+		return partial("admin.backsheet.cetak",[
+			'pengirimans'=>$pengirimans,
+			'layanans'=>$layanans,
+		]);
+	}
+
+	function rekap()
+	{
+		$pengirimans = Pengiriman::get();
+		$layanans = [];
+
+		foreach($pengirimans as $pengiriman){
+			if(!in_array($pengiriman->jenis_layanan,$layanans)){
+				$layanans[] = $pengiriman->jenis_layanan;
+			}
+		}
+		return view("admin.backsheet.rekap",[
 			'pengirimans'=>$pengirimans,
 			'layanans'=>$layanans,
 		]);

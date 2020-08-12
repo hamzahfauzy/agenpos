@@ -10,4 +10,7 @@ class Pengiriman extends Model
     function penerima(){
         return $this->hasOne(Pengirim::class,['id_pengiriman'=>'id']);
     }
+    function agen(){
+        return $this->hasOne(User::class,['id'=>'id_agen']);
+    }
 }

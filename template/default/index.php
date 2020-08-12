@@ -14,6 +14,7 @@
     <style type="text/css">
     	html, body {
     		height: 100%;
+            font-size:12px;
     	}
         .bg {
             background:url(<?=asset('assets/agen.png')?>);

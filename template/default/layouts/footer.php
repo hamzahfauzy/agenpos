@@ -63,12 +63,16 @@
 	        </div>
 	        <div class="box-others">
 	            <div class="box">
-	                <img src="<?=asset('assets/report.png')?>" alt="">
-	                <span>Buka Rekap</span>
+	            	<a href="<?=base_url()?>/admin/backsheet/rekap">
+		                <img src="<?=asset('assets/report.png')?>" alt="">
+		                <span>Buka Rekap</span>
+		            </a>
 	            </div>
 	            <div class="box">
-	                <img src="<?=asset('assets/cancel.png')?>" alt="">
-	                <span>Tutup Rekap</span>
+	            	<a href="<?=base_url()?>/admin/home">
+		                <img src="<?=asset('assets/cancel.png')?>" alt="">
+		                <span>Tutup Rekap</span>
+		            </a>
 	            </div>
 	        </div>
 	    </div>
@@ -79,8 +83,10 @@
 	        </div>
 	        <div class="box-others">
 	            <div class="box">
-	                <img src="<?=asset('assets/check.png')?>" alt="">
-	                <span>Status Backsheet Loket</span>
+	            	<a href="<?=base_url()?>/admin/backsheet/index">
+		                <img src="<?=asset('assets/check.png')?>" alt="">
+		                <span>Status Backsheet Loket</span>
+		            </a>
 	            </div>
 	            <!-- <div class="box">
 	                <img src="<?=asset('assets/saldo.jpg')?>" alt="">
@@ -90,10 +96,10 @@
 	                <img src="<?=asset('assets/tarif-check.png')?>" alt="">
 	                <span>Cek Tarif</span>
 	            </div>
-	            <div class="box">
+	            <!-- <div class="box">
 	                <img src="<?=asset('assets/cancel.png')?>" alt="">
 	                <span>Pembatalan Kiriman</span>
-	            </div>
+	            </div> -->
 	        </div>
 	    </div>
 
@@ -102,17 +108,19 @@
 	            Laporan
 	        </div>
 	        <div class="box-others">
-	            <div class="box">
+	            <!-- <div class="box">
 	                <img src="<?=asset('assets/report.png')?>" alt="">
 	                <span>Laporan Transaksi Batal</span>
 	            </div>
 	            <div class="box">
 	                <img src="<?=asset('assets/print.png')?>" alt="">
 	                <span>Cetak Ulang Rekap</span>
-	            </div>
+	            </div> -->
 	            <div class="box">
-	                <img src="<?=asset('assets/print.png')?>" alt="">
-	                <span>Cetak Ulang Backsheet</span>
+	            	<a href="<?=base_url()?>/admin/backsheet/cetak">
+		                <img src="<?=asset('assets/print.png')?>" alt="">
+		                <span>Cetak Ulang Backsheet</span>
+		            </a>
 	            </div>
 	        </div>
 	    </div>
@@ -123,8 +131,10 @@
 	        </div>
 	        <div class="box-others">
 	            <div class="box">
-	                <img src="<?=asset('assets/check.png')?>" alt="">
-	                <span>Cetak Backsheet POS</span>
+	            	<a href="<?=base_url()?>/agen/backsheet/cetak">
+		                <img src="<?=asset('assets/check.png')?>" alt="">
+		                <span>Cetak Backsheet POS</span>
+		            </a>
 	            </div>
 	            <!-- <div class="box">
 	                <img src="<?=asset('assets/saldo.jpg')?>" alt="">
@@ -145,8 +155,10 @@
 					</a>
 	            </div>
 	            <div class="box">
-	                <img src="<?=asset('assets/report.png')?>" alt="">
-	                <span>Tutup Backsheet</span>
+	            	<a href="<?=base_url()?>/agen/home">
+		                <img src="<?=asset('assets/report.png')?>" alt="">
+		                <span>Tutup Backsheet</span>
+		            </a>
 	            </div>
 	        </div>
 	    </div>

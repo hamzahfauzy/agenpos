@@ -34,9 +34,9 @@ td label {
 						<div>
 						<input type="hidden" name="pengiriman[id_agen]" value="<?=$_SESSION['id']?>">
 						<b>ID Pelanggan</b>
-						<input type="text" name="pengiriman[id_pelanggan]" required="" style="width: 200px">
+						<input type="text" name="pengiriman[id_pelanggan]" value="0" style="width: 200px">
 						<b>EXT ID</b>
-						<input type="text" name="pengiriman[id_ext]" required="" style="width: 200px">
+						<input type="text" name="pengiriman[id_ext]" value="0" style="width: 200px">
 						<br>
 						</div>
 						</center>
@@ -179,11 +179,11 @@ td label {
 						<center>
 						<div>
 						P
-						<input type="text" name="pengiriman[volume_p]" required="" style="width: 50px" placeholder="P"> x
+						<input type="text" name="pengiriman[volume_p]" style="width: 50px" placeholder="P"> x
 						L
-						<input type="text" name="pengiriman[volume_l]" required="" style="width: 50px" placeholder="L"> x
+						<input type="text" name="pengiriman[volume_l]" style="width: 50px" placeholder="L"> x
 						T
-						<input type="text" name="pengiriman[volume_t]" required="" style="width: 50px" placeholder="T">
+						<input type="text" name="pengiriman[volume_t]" style="width: 50px" placeholder="T">
 						<br>
 						</div>
 						</center>
@@ -196,7 +196,7 @@ td label {
 									<label>Berat Volume</label>
 								</td>
 								<td>
-									<input type="text" name="pengiriman[volume_berat]" class="form-control form-control-sm" required="">
+									<input type="text" name="pengiriman[volume_berat]" class="form-control form-control-sm">
 								</td>
 							</tr>
 							<tr>
@@ -204,7 +204,7 @@ td label {
 									<label>Berat</label>
 								</td>
 								<td>
-									<input type="text" name="tujuan" class="form-control form-control-sm" required="">
+									<input type="text" name="tujuan" class="form-control form-control-sm">
 								</td>
 							</tr>
 						</table>
@@ -261,7 +261,7 @@ td label {
 							<tr>
 								<td colspan="2">
 									<label>Nama Perusahaan</label>
-									<input type="text" name="penerima[nama_perusahaan]" class="form-control form-control-sm" required="">
+									<input type="text" name="penerima[nama_perusahaan]" class="form-control form-control-sm" >
 									<p></p>
 								</td>
 							</tr>
@@ -316,7 +316,7 @@ td label {
 							<tr>
 								<td colspan="2">
 									<label>Nama Perusahaan</label>
-									<input type="text" name="pengirim[nama_perusahaan]" class="form-control form-control-sm" required="">
+									<input type="text" name="pengirim[nama_perusahaan]" class="form-control form-control-sm">
 									<p></p>
 								</td>
 							</tr>
