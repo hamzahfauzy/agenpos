@@ -109,7 +109,7 @@ td label {
 									<label>Berat Aktual</label>
 								</td>
 								<td>
-									<input type="text" name="pengiriman[berat_aktual]" class="form-control form-control-sm" required="" min="1" id="berat-act">
+									<input type="number" value="1" name="pengiriman[berat_aktual]" class="form-control form-control-sm" required="" min="1" id="berat-act">
 								</td>
 							</tr>
 							<tr>
@@ -117,7 +117,12 @@ td label {
 									<label>Jenis Kiriman</label>
 								</td>
 								<td>
-									<input type="text" name="pengiriman[jenis_kiriman]" class="form-control form-control-sm" required="">
+									<select class="form-control form-control-sm" name="pengiriman[jenis_kiriman]" required="">
+										<option value="">- Pilih Jenis Kiriman -</option>
+										<option value="Surat">Surat</option>
+										<option value="Paket">Paket</option>
+									</select>
+									<!-- <input type="text" name="pengiriman[jenis_kiriman]" class="form-control form-control-sm" required=""> -->
 								</td>
 							</tr>
 							<tr>
@@ -196,7 +201,7 @@ td label {
 									<label>Berat Volume</label>
 								</td>
 								<td>
-									<input type="text" name="pengiriman[volume_berat]" class="form-control form-control-sm">
+									<input type="number" value="1" name="pengiriman[volume_berat]" class="form-control form-control-sm volume_berat" min="1">
 								</td>
 							</tr>
 							<tr>
@@ -218,7 +223,7 @@ td label {
 									<label>Bea Kirim</label>
 								</td>
 								<td>
-									<input type="text" name="pengiriman[bea_kirim]" class="form-control form-control-sm" required="">
+									<input type="text" readonly="" name="pengiriman[bea_kirim]" class="bea-kirim form-control form-control-sm" required="">
 								</td>
 							</tr>
 							<tr>
@@ -226,7 +231,7 @@ td label {
 									<label>Diskon</label>
 								</td>
 								<td>
-									<input type="text" name="pengiriman[diskon]" class="form-control form-control-sm" required="">
+									<input type="number" value="0" name="pengiriman[diskon]" class="form-control form-control-sm diskon" required="">
 								</td>
 							</tr>
 							<tr>
@@ -234,7 +239,7 @@ td label {
 									<label>PPN</label>
 								</td>
 								<td>
-									<input type="text" name="pengiriman[ppn]" class="form-control form-control-sm" required="">
+									<input type="number" value="0" name="pengiriman[ppn]" class="form-control form-control-sm ppn" required="">
 								</td>
 							</tr>
 							<tr>
@@ -242,7 +247,7 @@ td label {
 									<label>HTNB</label>
 								</td>
 								<td>
-									<input type="text" name="pengiriman[htnb]" class="form-control form-control-sm" required="">
+									<input type="number" value="0" name="pengiriman[htnb]" class="form-control form-control-sm htnb" required="">
 								</td>
 							</tr>
 							<tr>
@@ -250,7 +255,7 @@ td label {
 									<label>Jumlah (RP)</label>
 								</td>
 								<td>
-									<input type="text" name="pengiriman[jumlah_bea]" class="form-control form-control-sm" required="">
+									<input type="text" readonly="" name="pengiriman[jumlah_bea]" class="form-control form-control-sm jumlah" required="">
 								</td>
 							</tr>
 						</table>
@@ -372,7 +377,7 @@ td label {
 			<center>
 			<div style="font-size: 12px;">
 			<label>Tarif ($)</label>
-			<input type="text" name="pengiriman[total_tarif]" required="" id="i-tarif" readonly style="width: 110px">
+			<input type="text" readonly="" name="pengiriman[total_tarif]" required="" id="i-tarif" readonly style="width: 110px">
 
 			<label>Jumlah</label>
 			<input type="text" name="pengiriman[jumlah_tarif]" required="" style="width: 110px">
@@ -415,6 +420,9 @@ var iTujuan = document.querySelector("#i-tujuan")
 var iTarif = document.querySelector("#i-tarif")
 var tblLayanan = document.querySelector("#tbl-layanan")
 var beratAct = document.querySelector("#berat-act")
+var vBerat = document.querySelector(".volume_berat")
+var jumlah = document.querySelector(".jumlah")
+var beaKirim = document.querySelector(".bea-kirim")
 
 provinsi.onchange = async () => {
 	var response = await fetch('<?=base_url()?>/agen/loket/get_cities/'+provinsi.value)
@@ -452,7 +460,8 @@ btnTujuan.onclick = async () => {
 				<td>${i+1}</td>
 				<td>${layanan.description}</td>
 				<td>
-					<b>Rp.${new Intl.NumberFormat().format(harga)}/kg</b>
+					<b>Rp.${new Intl.NumberFormat().format(harga)}/kg</b><br>
+					ETD: ${layanan.cost[0].etd}<br>
 					<button class="btn btn-success btn-sm" type="button" onclick="selectTarif(${layanan.cost[0].value},'${layanan.description}')">Pilih</button>
 				</td>
 			</tr>
@@ -471,10 +480,51 @@ btnTujuan.onclick = async () => {
 }	
 
 function selectTarif(val,layanan){
-	iTarif.value = new Intl.NumberFormat().format(beratAct.value*val)
+	var berat = beratAct.value > vBerat.value ? beratAct.value : vBerat.value
+	var tarif = new Intl.NumberFormat().format(berat*val)
 	
 	document.querySelector("#inp-layanan").value = layanan
 	document.querySelector("#inp-tarif").value = val
+
+	beaKirim.value = tarif
+	iTarif.value = tarif
+	jumlah.value = tarif
+}
+
+document.querySelector(".diskon").onkeyup = (evt) => {
+	var ppn = document.querySelector(".ppn").value
+	var htnb = document.querySelector(".htnb").value
+	bea_kirim = beaKirim.value.replace(",","")
+	var tarif = bea_kirim - (bea_kirim * parseInt(evt.target.value)/100) + parseInt(ppn) + parseInt(htnb)
+
+	tarif = new Intl.NumberFormat().format(tarif)
+
+	iTarif.value = tarif
+	jumlah.value = tarif
+}
+
+document.querySelector(".ppn").onkeyup = (evt) => {
+	var diskon = document.querySelector(".diskon").value
+	var htnb = document.querySelector(".htnb").value
+	bea_kirim = beaKirim.value.replace(",","")
+	var tarif = bea_kirim - (bea_kirim * parseInt(diskon)/100) + parseInt(evt.target.value) + parseInt(htnb)
+	
+	tarif = new Intl.NumberFormat().format(tarif)
+
+	iTarif.value = tarif
+	jumlah.value = tarif
+}
+
+document.querySelector(".htnb").onkeyup = (evt) => {
+	var diskon = document.querySelector(".diskon").value
+	var ppn = document.querySelector(".ppn").value
+	bea_kirim = beaKirim.value.replace(",","")
+	var tarif = bea_kirim - (bea_kirim * parseInt(diskon)/100) + parseInt(evt.target.value) + parseInt(ppn)
+	
+	tarif = new Intl.NumberFormat().format(tarif)
+
+	iTarif.value = tarif
+	jumlah.value = tarif
 }
 
 </script>
