@@ -109,7 +109,7 @@ td label {
 									<label>Berat Aktual</label>
 								</td>
 								<td>
-									<input type="number" value="1" name="pengiriman[berat_aktual]" class="form-control form-control-sm" required="" min="1" id="berat-act">
+									<input type="number" value="1" name="pengiriman[berat_aktual]" class="form-control form-control-sm berat_aktual" required="" min="1" id="berat-act">
 								</td>
 							</tr>
 							<tr>
@@ -130,7 +130,7 @@ td label {
 									<label>Nilai Barang</label>
 								</td>
 								<td>
-									<input type="number" name="pengiriman[nilai_barang]" class="form-control form-control-sm" required="">
+									<input type="number" name="pengiriman[nilai_barang]" min="1" value="1" class="form-control form-control-sm nilai_barang" required="">
 								</td>
 							</tr>
 							<input type="hidden" name="pengiriman[jenis_layanan]" id="inp-layanan">
@@ -209,7 +209,7 @@ td label {
 									<label>Berat</label>
 								</td>
 								<td>
-									<input type="text" name="tujuan" class="form-control form-control-sm">
+									<input type="text" class="form-control form-control-sm berat_dipakai" readonly="">
 								</td>
 							</tr>
 						</table>
@@ -231,7 +231,7 @@ td label {
 									<label>Diskon</label>
 								</td>
 								<td>
-									<input type="number" value="0" name="pengiriman[diskon]" class="form-control form-control-sm diskon" required="">
+									<input type="number" value="0" name="pengiriman[diskon]" class="form-control form-control-sm diskon" required="" readonly="">
 								</td>
 							</tr>
 							<tr>
@@ -239,7 +239,7 @@ td label {
 									<label>PPN</label>
 								</td>
 								<td>
-									<input type="number" value="0" name="pengiriman[ppn]" class="form-control form-control-sm ppn" required="">
+									<input type="number" value="0" name="pengiriman[ppn]" class="form-control form-control-sm ppn" required="" readonly="">
 								</td>
 							</tr>
 							<tr>
@@ -247,7 +247,7 @@ td label {
 									<label>HTNB</label>
 								</td>
 								<td>
-									<input type="number" value="0" name="pengiriman[htnb]" class="form-control form-control-sm htnb" required="">
+									<input type="number" value="0" name="pengiriman[htnb]" class="form-control form-control-sm htnb" required="" readonly="">
 								</td>
 							</tr>
 							<tr>
@@ -423,6 +423,9 @@ var beratAct = document.querySelector("#berat-act")
 var vBerat = document.querySelector(".volume_berat")
 var jumlah = document.querySelector(".jumlah")
 var beaKirim = document.querySelector(".bea-kirim")
+var nilai_barang = document.querySelector(".nilai_barang")
+var htnb = document.querySelector(".htnb")
+var ppn  = document.querySelector(".ppn")
 
 provinsi.onchange = async () => {
 	var response = await fetch('<?=base_url()?>/agen/loket/get_cities/'+provinsi.value)
@@ -443,8 +446,15 @@ kabupaten.onchange = (e) => {
 btnTujuan.onclick = async () => {
 	var response = await fetch('<?=base_url()?>/agen/loket/get_city/'+kabupaten.value+'?province='+provinsi.value)
 	var res     = await response.json()
-
 	iTujuan.value = res.province+", "+res.city_name+", "+address.value
+}	
+
+async function getTujuan()
+{
+	var response = await fetch('<?=base_url()?>/agen/loket/get_city/'+kabupaten.value+'?province='+provinsi.value)
+	var res     = await response.json()
+
+	// iTujuan.value = res.province+", "+res.city_name+", "+address.value
 
 	var res = await fetch('<?=base_url()?>/agen/loket/get_costs/'+kabupaten.value+"?courier=pos")
 	var data = await res.json()
@@ -454,6 +464,16 @@ btnTujuan.onclick = async () => {
 	if(data.length > 0){
 		data.forEach((layanan,i)=>{
 			var harga = layanan.cost[0].value
+			var _htnb = 0.25 * nilai_barang.value
+			harga = harga+_htnb
+
+			var _ppn = 0.01*layanan.cost[0].value
+			harga = harga+_ppn
+
+			var berat = beratAct.value > vBerat.value ? beratAct.value : vBerat.value
+			harga = harga+(berat*harga)
+
+			document.querySelector('.berat_dipakai').value = berat
 			
 			html += `
 			<tr>
@@ -462,7 +482,7 @@ btnTujuan.onclick = async () => {
 				<td>
 					<b>Rp.${new Intl.NumberFormat().format(harga)}/kg</b><br>
 					ETD: ${layanan.cost[0].etd}<br>
-					<button class="btn btn-success btn-sm" type="button" onclick="selectTarif(${layanan.cost[0].value},'${layanan.description}')">Pilih</button>
+					<button class="btn btn-success btn-sm" type="button" onclick="selectTarif(${layanan.cost[0].value},'${layanan.description}',${harga})">Pilih</button>
 				</td>
 			</tr>
 			`
@@ -477,54 +497,66 @@ btnTujuan.onclick = async () => {
 
 
 	tblLayanan.innerHTML = html
-}	
+}
 
-function selectTarif(val,layanan){
-	var berat = beratAct.value > vBerat.value ? beratAct.value : vBerat.value
-	var tarif = new Intl.NumberFormat().format(berat*val)
-	
+function selectTarif(val,layanan,harga){
 	document.querySelector("#inp-layanan").value = layanan
-	document.querySelector("#inp-tarif").value = val
+	document.querySelector("#inp-tarif").value = harga
 
-	beaKirim.value = tarif
-	iTarif.value = tarif
-	jumlah.value = tarif
+	beaKirim.value = val
+
+	ppn.value = 0.01*val
+	htnb.value = 0.25 * nilai_barang.value
+	iTarif.value = harga
+	jumlah.value = harga
 }
 
-document.querySelector(".diskon").onkeyup = (evt) => {
-	var ppn = document.querySelector(".ppn").value
-	var htnb = document.querySelector(".htnb").value
-	bea_kirim = beaKirim.value.replace(",","")
-	var tarif = bea_kirim - (bea_kirim * parseInt(evt.target.value)/100) + parseInt(ppn) + parseInt(htnb)
-
-	tarif = new Intl.NumberFormat().format(tarif)
-
-	iTarif.value = tarif
-	jumlah.value = tarif
+document.querySelector(".nilai_barang").onblur = async (evt) => {
+	await getTujuan()
 }
 
-document.querySelector(".ppn").onkeyup = (evt) => {
-	var diskon = document.querySelector(".diskon").value
-	var htnb = document.querySelector(".htnb").value
-	bea_kirim = beaKirim.value.replace(",","")
-	var tarif = bea_kirim - (bea_kirim * parseInt(diskon)/100) + parseInt(evt.target.value) + parseInt(htnb)
+document.querySelector(".berat_aktual").onblur = async (evt) => {
+	await getTujuan()
+}
+
+document.querySelector(".volume_berat").onblur = async (evt) => {
+	await getTujuan()
+}
+
+// document.querySelector(".diskon").onkeyup = (evt) => {
+// 	var ppn = document.querySelector(".ppn").value
+// 	var htnb = document.querySelector(".htnb").value
+// 	bea_kirim = beaKirim.value.replace(",","")
+// 	var tarif = bea_kirim - (bea_kirim * parseInt(evt.target.value)/100) + parseInt(ppn) + parseInt(htnb)
+
+// 	tarif = new Intl.NumberFormat().format(tarif)
+
+// 	iTarif.value = tarif
+// 	jumlah.value = tarif
+// }
+
+// document.querySelector(".ppn").onkeyup = (evt) => {
+// 	var diskon = document.querySelector(".diskon").value
+// 	var htnb = document.querySelector(".htnb").value
+// 	bea_kirim = beaKirim.value.replace(",","")
+// 	var tarif = bea_kirim - (bea_kirim * parseInt(diskon)/100) + parseInt(evt.target.value) + parseInt(htnb)
 	
-	tarif = new Intl.NumberFormat().format(tarif)
+// 	tarif = new Intl.NumberFormat().format(tarif)
 
-	iTarif.value = tarif
-	jumlah.value = tarif
-}
+// 	iTarif.value = tarif
+// 	jumlah.value = tarif
+// }
 
-document.querySelector(".htnb").onkeyup = (evt) => {
-	var diskon = document.querySelector(".diskon").value
-	var ppn = document.querySelector(".ppn").value
-	bea_kirim = beaKirim.value.replace(",","")
-	var tarif = bea_kirim - (bea_kirim * parseInt(diskon)/100) + parseInt(evt.target.value) + parseInt(ppn)
+// document.querySelector(".htnb").onkeyup = (evt) => {
+// 	var diskon = document.querySelector(".diskon").value
+// 	var ppn = document.querySelector(".ppn").value
+// 	bea_kirim = beaKirim.value.replace(",","")
+// 	var tarif = bea_kirim - (bea_kirim * parseInt(diskon)/100) + parseInt(evt.target.value) + parseInt(ppn)
 	
-	tarif = new Intl.NumberFormat().format(tarif)
+// 	tarif = new Intl.NumberFormat().format(tarif)
 
-	iTarif.value = tarif
-	jumlah.value = tarif
-}
+// 	iTarif.value = tarif
+// 	jumlah.value = tarif
+// }
 
 </script>
