@@ -184,11 +184,11 @@ td label {
 						<center>
 						<div>
 						P
-						<input type="text" name="pengiriman[volume_p]" style="width: 50px" placeholder="P"> x
+						<input type="text" name="pengiriman[volume_p]" class="volume_p" style="width: 50px" value="0" disabled=""> x
 						L
-						<input type="text" name="pengiriman[volume_l]" style="width: 50px" placeholder="L"> x
+						<input type="text" name="pengiriman[volume_l]" class="volume_l" style="width: 50px" value="0" disabled=""> x
 						T
-						<input type="text" name="pengiriman[volume_t]" style="width: 50px" placeholder="T">
+						<input type="text" name="pengiriman[volume_t]" class="volume_t" style="width: 50px" value="0" disabled="">
 						<br>
 						</div>
 						</center>
@@ -201,7 +201,7 @@ td label {
 									<label>Berat Volume</label>
 								</td>
 								<td>
-									<input type="number" value="1" name="pengiriman[volume_berat]" class="form-control form-control-sm volume_berat" min="1">
+									<input type="number" value="0" name="pengiriman[volume_berat]" class="form-control form-control-sm volume_berat" min="0" readonly="">
 								</td>
 							</tr>
 							<tr>
@@ -426,6 +426,10 @@ var beaKirim = document.querySelector(".bea-kirim")
 var nilai_barang = document.querySelector(".nilai_barang")
 var htnb = document.querySelector(".htnb")
 var ppn  = document.querySelector(".ppn")
+var volume_p = document.querySelector(".volume_p")
+var volume_l = document.querySelector(".volume_l")
+var volume_t = document.querySelector(".volume_t")
+var volume_berat = document.querySelector(".volume_berat")
 
 provinsi.onchange = async () => {
 	var response = await fetch('<?=base_url()?>/agen/loket/get_cities/'+provinsi.value)
@@ -444,6 +448,9 @@ kabupaten.onchange = (e) => {
 }
 
 btnTujuan.onclick = async () => {
+	volume_p.disabled = false
+	volume_l.disabled = false
+	volume_t.disabled = false
 	var response = await fetch('<?=base_url()?>/agen/loket/get_city/'+kabupaten.value+'?province='+provinsi.value)
 	var res     = await response.json()
 	iTujuan.value = res.province+", "+res.city_name+", "+address.value
@@ -500,6 +507,7 @@ async function getTujuan()
 }
 
 function selectTarif(val,layanan,harga){
+	harga = new Intl.NumberFormat().format(harga)
 	document.querySelector("#inp-layanan").value = layanan
 	document.querySelector("#inp-tarif").value = harga
 
@@ -521,6 +529,26 @@ document.querySelector(".berat_aktual").onblur = async (evt) => {
 
 document.querySelector(".volume_berat").onblur = async (evt) => {
 	await getTujuan()
+}
+
+document.querySelector(".volume_p").onblur = async (evt) => {
+	hitungMetrik()
+	await getTujuan()
+}
+
+document.querySelector(".volume_l").onblur = async (evt) => {
+	hitungMetrik()
+	await getTujuan()
+}
+
+document.querySelector(".volume_t").onblur = async (evt) => {
+	hitungMetrik()
+	await getTujuan()
+}
+
+function hitungMetrik()
+{
+	volume_berat.value = (volume_p.value*volume_l.value*volume_t.value)/6000
 }
 
 // document.querySelector(".diskon").onkeyup = (evt) => {
