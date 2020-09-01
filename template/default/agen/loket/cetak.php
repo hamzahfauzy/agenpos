@@ -136,7 +136,7 @@ $pengiriman->pengirim();
 		<td>
 			<ol>
 				<li>Setuju dengan ketentuan dan syarat pengirim yang ditetapkan PT. Pos Indonesia (persero)</li>
-				<li>Nilai pertanggung jawaban Rp. 1.000.000</li>
+				<li>Nilai pertanggung jawaban Rp. <?=number_format($pengiriman->nilai_barang)?></li>
 			</ol>
 		</td>
 	</tr>

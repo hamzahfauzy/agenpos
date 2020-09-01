@@ -283,7 +283,7 @@ td label {
 									<label>Alamat</label>
 								</td>
 								<td>
-									<input type="text" name="penerima[alamat]" class="form-control form-control-sm" required="">
+									<input type="text" name="penerima[alamat]" class="form-control form-control-sm alamat_penerima" required="">
 								</td>
 							</tr>
 							<tr>
@@ -298,7 +298,7 @@ td label {
 							<tr>
 								<td colspan="2">
 									<label>Kota</label>
-									<input type="text" name="penerima[kota]" required="" style="width: 110px">
+									<input type="text" name="penerima[kota]" required="" class="kota_penerima" style="width: 110px">
 
 									<label>Kodepos&nbsp;</label>
 									<input type="text" name="penerima[kode_pos]" required="" style="width: 110px">
@@ -308,10 +308,10 @@ td label {
 							<tr>
 								<td colspan="2">
 									<label>Provinsi&nbsp;&nbsp;</label>
-									<input type="text" name="penerima[provinsi]" required="" style="width: 110px">
+									<input type="text" name="penerima[provinsi]" required="" class="provinsi_penerima" style="width: 110px">
 
 									<label>Negara</label>
-									<input type="text" name="penerima[negara]" required="" style="width: 100px">
+									<input type="text" name="penerima[negara]" required="" value="Indonesia" style="width: 100px">
 								</td>
 							</tr>
 						</table>
@@ -365,7 +365,7 @@ td label {
 									<input type="text" name="pengirim[provinsi]" required="" style="width: 110px">
 
 									<label>Negara</label>
-									<input type="text" name="pengirim[negara]" required="" style="width: 100px">
+									<input type="text" name="pengirim[negara]" required="" value="Indonesia" style="width: 100px">
 								</td>
 							</tr>
 						</table>
@@ -454,6 +454,9 @@ btnTujuan.onclick = async () => {
 	var response = await fetch('<?=base_url()?>/agen/loket/get_city/'+kabupaten.value+'?province='+provinsi.value)
 	var res     = await response.json()
 	iTujuan.value = res.province+", "+res.city_name+", "+address.value
+	document.querySelector('.alamat_penerima').value = iTujuan.value
+	document.querySelector('.provinsi_penerima').value = res.province
+	document.querySelector('.kota_penerima').value = res.city_name
 }	
 
 async function getTujuan()
@@ -478,6 +481,9 @@ async function getTujuan()
 			harga = harga+_ppn
 
 			var berat = beratAct.value > vBerat.value ? beratAct.value : vBerat.value
+
+			document.querySelector(".berat_aktual").value = berat
+
 			harga = harga+(berat*harga)
 
 			document.querySelector('.berat_dipakai').value = berat
