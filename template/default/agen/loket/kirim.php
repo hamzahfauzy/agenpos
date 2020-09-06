@@ -338,7 +338,7 @@ td label {
 									<label>Alamat</label>
 								</td>
 								<td>
-									<input type="text" name="pengirim[alamat]" class="form-control form-control-sm" required="">
+									<input type="text" value="Jl. Sabang Merauke no 59 pematang siantar" name="pengirim[alamat]" class="form-control form-control-sm" required="">
 								</td>
 							</tr>
 							<tr>
@@ -353,19 +353,19 @@ td label {
 							<tr>
 								<td colspan="2">
 									<label>Kota</label>
-									<input type="text" name="pengirim[kota]" required="" style="width: 110px">
+									<input type="text" name="pengirim[kota]" value="Pematang Siantar" required="" style="width: 110px">
 									<label>Kodepos&nbsp;</label>
-									<input type="text" name="pengirim[kode_pos]" required="" style="width: 110px">
+									<input type="text" name="pengirim[kode_pos]" value="21121" required="" style="width: 110px">
 
 								</td>
 							</tr>
 							<tr>
 								<td colspan="2">
 									<label>Provinsi&nbsp;&nbsp;</label>
-									<input type="text" name="pengirim[provinsi]" required="" style="width: 110px">
+									<input type="text" name="pengirim[provinsi]" value="Sumatera Utara" required="" style="width: 110px">
 
 									<label>Negara</label>
-									<input type="text" name="pengirim[negara]" required="" value="Indonesia" style="width: 100px">
+									<input type="text" name="pengirim[negara]" value="Indonesia" required="" value="Indonesia" style="width: 100px">
 								</td>
 							</tr>
 						</table>
@@ -474,7 +474,7 @@ async function getTujuan()
 	if(data.length > 0){
 		data.forEach((layanan,i)=>{
 			var harga = layanan.cost[0].value
-			var _htnb = 0.25 * nilai_barang.value
+			var _htnb = 0.0025 * nilai_barang.value
 			harga = harga+_htnb
 
 			var _ppn = 0.01*layanan.cost[0].value
@@ -520,7 +520,7 @@ function selectTarif(val,layanan,harga){
 	beaKirim.value = val
 
 	ppn.value = 0.01*val
-	htnb.value = 0.25 * nilai_barang.value
+	htnb.value = 0.025 * nilai_barang.value
 	iTarif.value = harga
 	jumlah.value = harga
 }
