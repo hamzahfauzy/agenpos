@@ -23,6 +23,7 @@ class LoketController
 		$resi = strtotime(date("Y-m-d h:i:s"));
 		$provinces = $this->get_provinces();		
 		return view("agen.loket.kirim",[
+			'pengiriman' => Pengiriman::where('tanggal',date('Y-m-d'))->count(),
 			'resi'=>$resi,
 			'provinces'=>$provinces
 		]);

@@ -14,7 +14,7 @@ class BacksheetController
 
 	function index()
 	{
-		$pengirimans = Pengiriman::where('id_agen',$_SESSION['id'])->get();
+		$pengirimans = Pengiriman::where('id_agen',$_SESSION['id'])->where('tanggal',date('Y-m-d'))->get();
 		$layanans = [];
 
 		foreach($pengirimans as $pengiriman){
@@ -30,7 +30,7 @@ class BacksheetController
 
 	function cetak()
 	{
-		$pengirimans = Pengiriman::where('id_agen',$_SESSION['id'])->get();
+		$pengirimans = Pengiriman::where('id_agen',$_SESSION['id'])->where('tanggal',date('Y-m-d'))->get();
 		$layanans = [];
 
 		foreach($pengirimans as $pengiriman){

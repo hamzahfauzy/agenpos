@@ -383,10 +383,10 @@ td label {
 			<input type="text" name="pengiriman[jumlah_tarif]" required="" style="width: 110px">
 
 			<label>BSU Loket</label>
-			<input type="text" name="pengiriman[bsu_loket]" required="" style="width: 110px">
+			<input type="text" name="pengiriman[bsu_loket]" required="" value="<?=$pengiriman?>" style="width: 110px">
 
 			<label>Kolektif</label>
-			<input type="text" name="pengiriman[kolektif]" required="" style="width: 110px">
+			<input type="text" name="pengiriman[kolektif]" class="kolektif" required="" style="width: 110px">
 
 			<label>Batal</label>
 			<input type="text" name="pengiriman[batal]" required="" style="width: 110px">
@@ -484,7 +484,7 @@ async function getTujuan()
 
 			document.querySelector(".berat_aktual").value = berat
 
-			harga = harga+(berat*harga)
+			harga = harga*berat
 
 			document.querySelector('.berat_dipakai').value = berat
 			
@@ -523,6 +523,7 @@ function selectTarif(val,layanan,harga){
 	htnb.value = 0.025 * nilai_barang.value
 	iTarif.value = harga
 	jumlah.value = harga
+	document.querySelector('.kolektif').value = harga
 }
 
 document.querySelector(".nilai_barang").onblur = async (evt) => {
