@@ -115,7 +115,7 @@ $pengiriman->pengirim();
 				<tr>
 					<td>Jumlah</td>
 					<td>:</td>
-					<td>Rp. <?= number_format($pengiriman->bea_kirim+$pengiriman->htnb) ?></td>
+					<td>Rp. <?= number_format($pengiriman->bea_kirim+$pengiriman->htnb+$pengiriman->ppn) ?></td>
 				</tr>
 			</table>
 		</td>
