@@ -555,7 +555,9 @@ document.querySelector(".volume_t").onblur = async (evt) => {
 
 function hitungMetrik()
 {
-	volume_berat.value = (volume_p.value*volume_l.value*volume_t.value)/6000
+	var berat = (volume_p.value*volume_l.value*volume_t.value)/6000
+	berat = Math.round(berat)
+	volume_berat.value = berat
 }
 
 // document.querySelector(".diskon").onkeyup = (evt) => {
