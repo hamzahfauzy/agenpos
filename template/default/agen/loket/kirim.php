@@ -520,7 +520,7 @@ function selectTarif(val,layanan,harga){
 	beaKirim.value = val
 
 	ppn.value = 0.01*val
-	htnb.value = 0.025 * nilai_barang.value
+	htnb.value = 0.0025 * nilai_barang.value
 	iTarif.value = harga
 	jumlah.value = harga
 	document.querySelector('.kolektif').value = harga
