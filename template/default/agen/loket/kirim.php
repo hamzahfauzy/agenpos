@@ -473,18 +473,18 @@ async function getTujuan()
 
 	if(data.length > 0){
 		data.forEach((layanan,i)=>{
-			var harga = layanan.cost[0].value
+			var berat = beratAct.value > vBerat.value ? beratAct.value : vBerat.value
+			var harga = layanan.cost[0].value*berat
 			var _htnb = 0.0025 * nilai_barang.value
 			harga = harga+_htnb
 
 			var _ppn = 0.01*layanan.cost[0].value
 			harga = harga+_ppn
 
-			var berat = beratAct.value > vBerat.value ? beratAct.value : vBerat.value
 
 			document.querySelector(".berat_aktual").value = berat
 
-			harga = harga*berat
+			// harga = harga*berat
 
 			document.querySelector('.berat_dipakai').value = berat
 			
@@ -495,7 +495,7 @@ async function getTujuan()
 				<td>
 					<b>Rp.${new Intl.NumberFormat().format(harga)}/kg</b><br>
 					ETD: ${layanan.cost[0].etd}<br>
-					<button class="btn btn-success btn-sm" type="button" onclick="selectTarif(${layanan.cost[0].value},'${layanan.description}',${harga})">Pilih</button>
+					<button class="btn btn-success btn-sm" type="button" onclick="selectTarif(${layanan.cost[0].value*berat},'${layanan.description}',${harga})">Pilih</button>
 				</td>
 			</tr>
 			`

@@ -14,7 +14,7 @@ class BacksheetController
 
 	function index()
 	{
-		$pengirimans = Pengiriman::get();
+		$pengirimans = Pengiriman::where('tanggal',date('Y-m-d'))->get();
 		$layanans = [];
 
 		foreach($pengirimans as $pengiriman){
@@ -46,7 +46,7 @@ class BacksheetController
 
 	function rekap()
 	{
-		$pengirimans = Pengiriman::get();
+		$pengirimans = Pengiriman::where('tanggal',date('Y-m-d'))->get();
 		$layanans = [];
 
 		foreach($pengirimans as $pengiriman){

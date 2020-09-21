@@ -105,7 +105,7 @@ $pengiriman->pengirim();
 				<tr>
 					<td>PPN</td>
 					<td>:</td>
-					<td>Rp. 0</td>
+					<td>Rp. <?= number_format($pengiriman->ppn) ?></td>
 				</tr>
 				<tr>
 					<td style="border-bottom: 1px solid #000;">HTNB</td>

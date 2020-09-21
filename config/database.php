@@ -3,6 +3,6 @@
 return [
     'db_host'     => 'localhost',
     'db_username' => 'root',
-    'db_password' => '',
-    'db_name'     => 'agenpos',
+    'db_password' => 'bappeda@4321',
+    'db_name'     => 'ztechno_agenpos',
 ];
