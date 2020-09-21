@@ -478,7 +478,7 @@ async function getTujuan()
 			var _htnb = 0.0025 * nilai_barang.value
 			harga = harga+_htnb
 
-			var _ppn = 0.01*layanan.cost[0].value
+			var _ppn = 0.01*layanan.cost[0].value*berat
 			harga = harga+_ppn
 
 
