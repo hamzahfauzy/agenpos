@@ -172,17 +172,17 @@
 				<tr>
 					<th>Total besar tunai</th>
 					<th>:</th>
-					<td></td>
+					<td><?=$total_tarif?></td>
 				</tr>
 				<tr>
 					<th>BSU Tunai</th>
 					<th>:</th>
-					<td></td>
+					<td><?=$total_bsu_loket?></td>
 				</tr>
 				<tr>
 					<th>BSU Kredit</th>
 					<th>:</th>
-					<td></td>
+					<td>0</td>
 				</tr>
 			</table>
 		</div>

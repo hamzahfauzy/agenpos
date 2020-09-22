@@ -1,3 +1,9 @@
+<?php
+use App\Models\Pengaturan;
+$pengaturan = Pengaturan::where('user_id',session()->get('id'))->where('tanggal',date('Y-m-d'))->first():
+$alert = empty($pengaturan) || ($pengaturan->status_rekap == 0 || $pengaturan->status_backhseet == 0) ? 'alert("Status Rekap atau Status Backsheet belum dibuka")' : '';
+$url   = !empty($pengaturan) && $pengaturan->status_rekap == 1 && $pengaturan->status_backhseet == 1 ? base_url().'/agen/loket/kirim' : '#';
+?>
 <!-- Taskbar -->
 <div class="taskbar">
     <div class="icons">
@@ -49,6 +55,12 @@
 	            	</a>
 	            </div>
 	            <div class="box">
+	            	<a href="<?=base_url()?>/admin/loket/nonaktivasi">
+	                <img src="<?=asset('assets/cancel.png')?>" alt="">
+	                <span>Non Aktifkan User</span>
+	            	</a>
+	            </div>
+	            <div class="box">
 	            	<a href="<?=base_url()?>/admin/loket/ubah">
 	                <img src="<?=asset('assets/user-edit.jpg')?>" alt="">
 	                <span>Ubah Data User</span>
@@ -69,7 +81,7 @@
 		            </a>
 	            </div>
 	            <div class="box">
-	            	<a href="<?=base_url()?>/admin/home">
+	            	<a href="<?=base_url()?>/admin/backsheet/tutup">
 		                <img src="<?=asset('assets/cancel.png')?>" alt="">
 		                <span>Tutup Rekap</span>
 		            </a>
@@ -149,13 +161,19 @@
 	        </div>
 	        <div class="box-others">
 	            <div class="box">
+					<a href="<?=base_url()?>/agen/backsheet/semua">
+						<img src="<?=asset('assets/report.png')?>" alt="">
+						<span>Semua Transaksi</span>
+					</a>
+	            </div>
+	            <div class="box">
 					<a href="<?=base_url()?>/agen/backsheet/index">
 						<img src="<?=asset('assets/report.png')?>" alt="">
 						<span>Buka Backsheet</span>
 					</a>
 	            </div>
 	            <div class="box">
-	            	<a href="<?=base_url()?>/agen/home">
+	            	<a href="<?=base_url()?>/agen/backsheet/tutup">
 		                <img src="<?=asset('assets/report.png')?>" alt="">
 		                <span>Tutup Backsheet</span>
 		            </a>
@@ -169,7 +187,7 @@
 	        </div>
 	        <div class="box-others">
 	            <div class="box">
-	            	<a href="<?=base_url()?>/agen/loket/kirim">
+	            	<a href="<?=$url?>" onclick="<?=$alert?>">
 	                <img src="<?=asset('assets/report.png')?>" alt="">
 	                <span>Loket Kiriman Ritel</span>
 	            	</a>

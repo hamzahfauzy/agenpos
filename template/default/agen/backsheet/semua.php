@@ -16,26 +16,26 @@
 	<div class="row">
 		<div class="col-12">
 			<center>
-				<h5>REKAPITULASI KIRIMAN AGEN</h5>
+				<h5>SEMUA TRANSAKSI</h5>
 			</center>
 			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th>NO</th>
-						<th>AGEN</th>
 						<th>RESI</th>
 						<th>PENGIRIM</th>
 						<th>PENERIMA</th>
 						<th>TUJUAN</th>
 						<th>BERAT</th>
 						<th>OK</th>
+						<th>PPN</th>
+						<th>HTNB</th>
+						<th>PPN HTNB</th>
+						<th>BSU</th>
 						<th>KET</th>
 					</tr>
 				</thead>
 				<tbody>
-					<?php if(empty($layanans)): ?>
-					<tr colspan="12"><i>Kosong!!</i></tr>
-					<?php endif ?>
 					<?php 
 					$i=1;
 
@@ -81,13 +81,19 @@
 						
 						<tr>
 							<td><?=$i?></td>
-							<td><?=$pengiriman->agen()->nama?></td>
-							<td><?=$pengiriman->no_resi?></td>
+							<td>
+								<?=$pengiriman->no_resi?><br>
+								<a href="<?=base_url()?>/agen/loket/cetak/<?=$pengiriman->id?>" class="no-print"><i class="fa fa-print"></i> Cetak Ulang Resi</a>
+							</td>
 							<td><?=$pengirim->nama?></td>
 							<td><?=$penerima->nama?></td>
 							<td><?=$pengiriman->tujuan?></td>
 							<td><?=$pengiriman->berat_aktual?></td>
 							<td><?=$pengiriman->tarif?></td>
+							<td><?=$pengiriman->ppn?></td>
+							<td><?=$pengiriman->htnb?></td>
+							<td><?=$pengiriman->ppn + $pengiriman->htnb?></td>
+							<td><?=$pengiriman->bsu_loket?></td>
 							<td></td>
 						</tr>
 					<?php 
@@ -97,14 +103,44 @@
 						endif;
 					
 					endforeach;
+
+					$total_berat += $sub_total_berat;
+						$total_tarif += $sub_total_tarif;
+						$total_ppn += $sub_total_ppn;
+						$total_htnb += $sub_total_htnb;
+						$total_ppn_htnb += $sub_total_ppn_htnb;
+						$total_bsu_loket += $sub_total_bsu_loket;
+					
 						
 					?>
+
+					<tr>
+						<th colspan="5">SUBTOTAL</th>
+						<td><?=$sub_total_berat?></td>
+						<td><?=$sub_total_tarif?></td>
+						<td><?=$sub_total_ppn?></td>
+						<td><?=$sub_total_htnb?></td>
+						<td><?=$sub_total_ppn_htnb?></td>
+						<td><?=$sub_total_bsu_loket?></td>
+						<td></td>
+					</tr>
 
 					<?php
 
 					endforeach;
 					
 					?>
+
+					<tr>
+						<th colspan="5">TOTAL</th>
+						<td><?=$total_berat?></td>
+						<td><?=$total_tarif?></td>
+						<td><?=$total_ppn?></td>
+						<td><?=$total_htnb?></td>
+						<td><?=$total_ppn_htnb?></td>
+						<td><?=$total_bsu_loket?></td>
+						<td></td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

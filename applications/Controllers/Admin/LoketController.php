@@ -25,6 +25,16 @@ class LoketController
 		]);
 	}
 
+	function nonaktivasi()
+	{
+		$users = User::where('level','agen')->where('status','aktif')->get();
+		foreach($users as $user)
+			$user->save([
+				'status'=>'non-aktif'
+			]);
+		redirect("/admin/home");
+	}
+
 	function ubah()
 	{
 		if(isset($_GET['user_id']))

@@ -182,7 +182,7 @@
 				<tr>
 					<th>BSU Kredit</th>
 					<th>:</th>
-					<td></td>
+					<td>0</td>
 				</tr>
 			</table>
 		</div>

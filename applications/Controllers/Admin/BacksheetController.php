@@ -4,6 +4,8 @@ if (!defined('Z_MVC')) die ("Not Allowed");
 
 use App\Helpers\AdminMiddleware;
 use App\Models\Pengiriman;
+use App\Models\Pengaturan;
+use App\Models\User;
 
 class BacksheetController
 {
@@ -14,6 +16,19 @@ class BacksheetController
 
 	function index()
 	{
+		$loket = User::where('level','agen')->get();
+		foreach($loket as $l)
+		{
+			$pengaturan = Pengaturan::where('tanggal',date('Y-m-d'))->where('user_id',$l->id)->first();
+			if(empty($pengaturan))
+			{
+				(new Pengaturan)->save([
+					'user_id' => $l->id,
+					'status_rekap' => 1,
+					'tanggal' => date('Y-m-d')
+				]);
+			}
+		}
 		$pengirimans = Pengiriman::where('tanggal',date('Y-m-d'))->get();
 		$layanans = [];
 
@@ -28,9 +43,22 @@ class BacksheetController
 		]);
 	}
 
+	function tutup()
+	{
+		$loket = User::where('level','agen')->get();
+		foreach($loket as $l)
+		{
+			$pengaturan = Pengaturan::where('tanggal',date('Y-m-d'))->where('user_id',$l->id)->first();
+			$pengaturan->save([
+				'status_rekap' => 0,
+				'status_backsheet' => 0,
+			]);
+		}
+	}
+
 	function cetak()
 	{
-		$pengirimans = Pengiriman::get();
+		$pengirimans = Pengiriman::where('tanggal',date('Y-m-d'))->get();
 		$layanans = [];
 
 		foreach($pengirimans as $pengiriman){
