@@ -1,7 +1,7 @@
 <?php
 use App\Models\Pengaturan;
 $pengaturan = Pengaturan::where('user_id',session()->get('id'))->where('tanggal',date('Y-m-d'))->first();
-$alert = empty($pengaturan) || ($pengaturan->status_rekap == 0 || $pengaturan->status_backhseet == 0) ? 'alert("Status Rekap atau Status Backsheet belum dibuka")' : '';
+$alert = empty($pengaturan) || ($pengaturan->status_rekap == 0 || $pengaturan->status_backhseet == 0) ? "alert('Status Rekap atau Status Backsheet belum dibuka')" : '';
 $url   = !empty($pengaturan) && $pengaturan->status_rekap == 1 && $pengaturan->status_backhseet == 1 ? base_url().'/agen/loket/kirim' : '#';
 ?>
 <!-- Taskbar -->
